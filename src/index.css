@@ -1,38 +1,49 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap");
 
 @import "tailwindcss";
 
+/* -----------------------------------
+   🌈 THEME — Futuristic Neon Purple
+-------------------------------------- */
 @theme {
-  --color-primary: #030014;
+  --color-primary: #0c0118;
 
-  --color-light-100: #cecefb;
-  --color-light-200: #a8b5db;
+  --color-light-100: #d7b8ff;
+  --color-light-200: #c595ff;
 
-  --color-gray-100: #9ca4ab;
+  --color-gray-100: #b8b8c7;
 
-  --color-dark-100: #0f0d23;
+  --color-dark-100: #140420;
 
   --font-dm-sans: DM Sans, sans-serif;
 
   --breakpoint-xs: 480px;
 
-  --background-image-hero-pattern: url("/hero-bg.png");
+  --background-image-hero-pattern: 
+    linear-gradient(135deg, rgba(98,0,255,0.2), rgba(197,0,255,0.2)),
+    url("/hero-bg-2.png");
 }
 
+/* -----------------------------------
+   BASE STYLES
+-------------------------------------- */
 @layer base {
   body {
-    font-family: "DM Sans", serif;
-    font-optical-sizing: auto;
-    background: #030014;
+    font-family: "DM Sans", sans-serif;
+    background: radial-gradient(circle at 20% 20%, #1a0033, #0b0016 70%);
+    color: white;
   }
 
   h1 {
-    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-[-1%] text-white sm:text-[64px] sm:leading-[76px];
+    @apply mx-auto max-w-4xl text-center text-5xl font-bold leading-tight tracking-tight text-white 
+           sm:text-[64px] sm:leading-[78px];
+    font-family: "Orbitron", sans-serif;
   }
 
   h2 {
-    @apply text-2xl font-bold text-white sm:text-3xl;
+    @apply text-3xl font-bold text-light-100 sm:text-4xl;
+    font-family: "Orbitron", sans-serif;
   }
 
   main {
@@ -40,118 +51,126 @@
   }
 
   header {
-    @apply sm:mt-10 mt-5;
+    @apply sm:mt-12 mt-6;
   }
 
   header img {
-    @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-md;
+    @apply w-full max-w-lg h-auto object-contain mx-auto drop-shadow-xl;
+    filter: drop-shadow(0 0 20px rgba(170, 0, 255, 0.5));
   }
 }
 
+/* -----------------------------------
+   COMPONENTS
+-------------------------------------- */
 @layer components {
+  /* Background pattern */
   .pattern {
-    @apply bg-hero-pattern w-full h-screen bg-center bg-cover absolute z-0;
+    @apply w-full h-screen bg-center bg-cover absolute z-0 opacity-80;
+    filter: brightness(0.7) blur(1px);
   }
 
   .wrapper {
     @apply px-5 py-12 xs:p-10 max-w-7xl mx-auto flex flex-col relative z-10;
   }
 
+  /* Trending Section — futuristic pill style */
   .trending {
     @apply mt-20;
 
     & ul {
-      @apply flex flex-row overflow-y-auto gap-5 -mt-10 w-full hide-scrollbar;
+      @apply flex flex-row overflow-x-auto gap-6 -mt-10 w-full hide-scrollbar;
     }
 
     & ul li {
-      @apply min-w-[230px] flex flex-row items-center;
+      @apply min-w-[210px] flex flex-col items-center;
     }
 
     & ul li p {
-      @apply fancy-text mt-[22px] text-nowrap;
+      @apply text-4xl font-bold text-light-200 mb-3;
+      font-family: "Orbitron", sans-serif;
     }
 
     & ul li img {
-      @apply w-[127px] h-[163px] rounded-lg object-cover -ml-3.5;
+      @apply w-[140px] h-[180px] rounded-xl object-cover shadow-lg;
+      filter: drop-shadow(0 0 15px rgba(160, 0, 255, 0.4));
+      transition: transform 0.3s ease;
+    }
+
+    & ul li img:hover {
+      transform: scale(1.08);
     }
   }
 
+  /* Search */
   .search {
-    @apply w-full bg-light-100/5 px-4 py-3 rounded-lg mt-10 max-w-3xl mx-auto;
-
-    & div {
-      @apply relative flex items-center;
-    }
-
-    & img {
-      @apply absolute left-2 h-5 w-5;
-    }
+    @apply w-full bg-white/5 px-4 py-3 rounded-2xl mt-10 max-w-3xl mx-auto backdrop-blur-lg
+           border border-white/10 shadow-inner;
 
     & input {
-      @apply w-full bg-transparent py-2 sm:pr-10 pl-10 text-base text-gray-200 placeholder-light-200 outline-hidden;
+      @apply w-full bg-transparent py-2 pl-10 text-base text-light-100 placeholder-light-200 outline-hidden;
     }
   }
 
+  /* Movies Grid */
   .all-movies {
     @apply space-y-9;
 
     & ul {
-      @apply grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+      @apply grid grid-cols-1 gap-7 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
     }
   }
 
+  /* Movie Card — Neon Glow + Glass */
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    @apply bg-dark-100/50 backdrop-blur-xl p-5 rounded-2xl border border-white/10 
+           shadow-[0_0_20px_rgba(140,0,255,0.2)];
 
     & img {
-      @apply rounded-lg h-auto w-full;
+      @apply rounded-xl h-auto w-full shadow-lg;
+      filter: drop-shadow(0 0 12px rgba(150, 0, 255, 0.4));
     }
 
     & h3 {
-      @apply text-white font-bold text-base line-clamp-1;
+      @apply text-white font-bold text-base mt-3 line-clamp-1 tracking-wide;
+      font-family: "Orbitron", sans-serif;
     }
 
+    /* Info Row */
     & .content {
-      @apply mt-2 flex flex-row items-center flex-wrap gap-2;
-    }
-
-    & .rating {
-      @apply flex flex-row items-center gap-1;
-    }
-
-    & .rating img {
-      @apply size-4 object-contain;
+      @apply mt-3 flex flex-row items-center flex-wrap gap-3;
     }
 
     & .rating p {
-      @apply font-bold text-base text-white;
+      @apply text-light-200 font-bold text-base;
     }
 
     & .content span {
       @apply text-sm text-gray-100;
     }
-
-    & .content .lang {
-      @apply capitalize text-gray-100 font-medium text-base;
-    }
-
-    & .content .year {
-      @apply text-gray-100 font-medium text-base;
-    }
   }
 }
 
+/* -----------------------------------
+   UTILITIES
+-------------------------------------- */
+
+/* Neon Gradient Text */
 @utility text-gradient {
-  @apply bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-[#ff9bff] via-[#c27bff] to-[#8a4dff] 
+         bg-clip-text text-transparent;
+  font-family: "Orbitron", sans-serif;
 }
 
+/* Futuristic Trending Number */
 @utility fancy-text {
-  -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
-  font-size: 190px;
-  font-family: "Bebas Neue", sans-serif;
+  -webkit-text-stroke: 3px rgba(255, 255, 255, 0.15);
+  font-size: 120px;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 2px;
 }
 
+/* Hide Scrollbar */
 @utility hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
