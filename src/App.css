@@ -12,9 +12,11 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  /* CHANGED: From Purple (#646cffaa) to Cyan (#22d3eeaa) */
+  filter: drop-shadow(0 0 2em #22d3eeaa);
 }
 .logo.react:hover {
+  /* Kept React Blue as it fits the Cyan theme well */
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
@@ -38,5 +40,6 @@
 }
 
 .read-the-docs {
-  color: #888;
+  /* CHANGED: From gray (#888) to Slate Blue (#94a3b8) */
+  color: #94a3b8;
 }

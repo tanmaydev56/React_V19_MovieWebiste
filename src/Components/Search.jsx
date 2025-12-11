@@ -1,21 +1,35 @@
-import React from 'react'
+import { PlaceholdersAndVanishInput } from "./ui/placeholders-and-vanish-input";
+const Search = ({ searchterm, setsearchterm }) => {
+  const placeholders = [
+    "Search for an action movie...",
+    "Try 'Inception'",
+    "Try 'Avengers'",
+    "Try 'Interstellar'",
+    "Search any movie title...",
+  ];
 
-const Search = ({searchterm,setsearchterm}) => {
-    
+  const handleChange = (e) => {
+    setsearchterm(e.target.value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className='search'>
+    <div className="search">
       <div>
-        <img 
-        src="./search.svg"
-        alt="search"
+        <img src="./search.svg" alt="search" />
+
+        <PlaceholdersAndVanishInput
+          placeholders={placeholders}
+          value={searchterm}
+          onChange={handleChange}
+          onSubmit={onSubmit}
         />
-        <input type="text"
-         placeholder='Search for movies'
-         value={searchterm}
-         onChange={(e)=>setsearchterm(e.target.value)}/>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
