@@ -17,18 +17,19 @@ const Search = ({ searchterm, setsearchterm }) => {
   };
 
   return (
-    <div className="search">
-      <div>
-        <img src="./search.svg" alt="search" />
-
-        <PlaceholdersAndVanishInput
+    
+     
+<div className="mt-10">        <PlaceholdersAndVanishInput
+          
           placeholders={placeholders}
           value={searchterm}
           onChange={handleChange}
           onSubmit={onSubmit}
         />
-      </div>
-    </div>
+        </div>
+
+      
+  
   );
 };
 
