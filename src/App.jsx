@@ -4,6 +4,7 @@ import Search from "./Components/Search";
 import { Spinner } from "flowbite-react";
 import { useDebounce } from "react-use";
 import MovieCard from "./Components/MovieCard";
+import { getTrendingMovies, updateSearchCount } from "../appwrite";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -41,6 +42,10 @@ function App() {
 
       const data = await response.json();
       setMovies(data.results || []);
+
+      if(query && data.results.length > 0){
+        await updateSearchCount(query, data.results[0]);
+      }
     } catch (error) {
       console.error("Error fetching movies:", error);
       setErrorMsg("Failed to fetch movies. Please try again later.");
@@ -53,17 +58,12 @@ function App() {
   // Fetch trending movies
   const loadTrendingMovies = async () => {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/trending/movie/week`,
-        API_OPTIONS
-      );
+     const movies =await getTrendingMovies();
+      setTrendingMovies(movies || []);
 
-      if (!response.ok) throw new Error(`TMDB Error: ${response.status}`);
-
-      const data = await response.json();
-      setTrendingMovies(data.results.slice(0, 10) || []);
     } catch (error) {
       console.error("Error fetching trending movies:", error);
+      
       setTrendingMovies([]);
     }
   };
@@ -71,7 +71,7 @@ function App() {
   // Load trending movies on page load
   useEffect(() => {
     loadTrendingMovies();
-    fetchMovies();
+   
   }, []);
 
   // Fetch movies on debounced search term change
@@ -102,12 +102,13 @@ function App() {
 
             <ul>
               {trendingMovies.map((movie, index) => (
-                <li key={movie.id}>
+                <li key={movie.$id}>
                   <p>{index + 1}</p>
 
                   <img
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title}
+                   src={movie.posterurl}
+                    alt={movie.searchterm}
+                  
                   />
                 </li>
               ))}
