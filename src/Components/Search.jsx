@@ -19,8 +19,8 @@ const Search = ({ searchterm, setsearchterm }) => {
   return (
     
      
-<div className="mt-10">        <PlaceholdersAndVanishInput
-          
+<div className="mt-10">       
+   <PlaceholdersAndVanishInput        
           placeholders={placeholders}
           value={searchterm}
           onChange={handleChange}

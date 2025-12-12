@@ -3,6 +3,7 @@ import "./App.css";
 import Search from "./Components/Search";
 import { Spinner } from "flowbite-react";
 import { useDebounce } from "react-use";
+import MovieCard from "./Components/MovieCard";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -29,8 +30,7 @@ function App() {
   // Fetch Movies
   const fetchMovies = async (query = "") => {
     setLoading(true);
-    setErrorMsg("");
-
+    setErrorMsg(""); 
     try {
       const endpoint = query
         ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
@@ -128,34 +128,7 @@ function App() {
           ) : movies.length === 0 ? (
             <p className="text-gray-300">No movies found.</p>
           ) : (
-            <ul>
-              {movies.map((movie) => (
-                <li key={movie.id} className="movie-card">
-                  {movie.poster_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={movie.title}
-                    />
-                  ) : (
-                    <div className="no-image h-64 bg-gray-700 rounded-lg" />
-                  )}
-
-                  <h3>{movie.title}</h3>
-
-                  <div className="content">
-                    <div className="rating">
-                      <p>⭐ {movie.vote_average.toFixed(1)}</p>
-                    </div>
-
-                    <span className="year">
-                      {movie.release_date?.split("-")[0] || "N/A"}
-                    </span>
-
-                    <span className="lang">{movie.original_language}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
+           <MovieCard movies={movies} />
           )}
         </section>
       </div>
